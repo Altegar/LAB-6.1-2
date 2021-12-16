@@ -33,7 +33,7 @@ int Count(int* r, const int n, int i) // функція обчислення к-
 	}
 }
 
-int Sum(int* r, int n, int i) // функція обчислення суми елементів
+int Sum(int* r, const int n, int i) // функція обчислення суми елементів
 {
 	if (i < n)
 	{
@@ -46,11 +46,17 @@ int Sum(int* r, int n, int i) // функція обчислення суми е
 		return 0;
 }
 
-void Replace(int* r, int n) // функція заміни нюлями цих елементів
+void Replace(int* r, const int n, int i) // функція заміни нюлями цих елементів
 {
-	for (int i = 0; i < n; i++)
+	if (i == 0)
+	{
 		if (!(r[i] % 2 != 0 || i % 7 == 0))
 			r[i] = 0;
+		else
+			return Replace(r, n, i + 1) + 1;
+	}
+	else
+		return Replace(r, n, i + 1);
 }
 
 void Print(int* r, const int n, int i) // форматне виведення
@@ -73,10 +79,10 @@ int main()
 	Random(r, n, a, b, 0);
 	cout << "Before = ";  Print(r, n, 0);
 
-	cout << "count = " << Count(r, n, 0) << "\n";
-	cout << "S = " << Sum(r, n, 0) << "\n";
+	cout << "Count = " << Count(r, n, 0) << "\n";
+	cout << "Sum = " << Sum(r, n, 0) << "\n";
 
-	Replace(r, n);
+	Replace(r, n, 0);
 	cout << "After = "; Print(r, n, 0);
 
 	return 0;
