@@ -25,7 +25,7 @@ int Count(int* r, int n, int i) // функція обчислення к-ті �
 		return 0;
 	else
 	{
-		if ((r[i] % 2) != 0 || (r[i] % 7 == 0))
+		if (!((r[i] % 2) != 0 || (i % 7 == 0)))
 			return Count(r, n, i + 1) + 1;
 		else
 			return Count(r, n, i + 1);
@@ -36,7 +36,7 @@ int Sum(int* r, int n, int i) // функція обчислення суми е
 {
 	if (i < n)
 	{
-		if ((r[i] % 2) != 0 || (r[i] % 7 == 0))
+		if (!((r[i] % 2) != 0 || (i % 7 == 0)))
 			return r[i] + Sum(r, n, i + 1);
 		else
 			return Sum(r, n, i + 1);
@@ -48,7 +48,7 @@ int Sum(int* r, int n, int i) // функція обчислення суми е
 void Replace(int* r, int n) // функція заміни нюлями цих елементів
 {
 	for (int i = 0; i < n; i++)
-		if (r[i] % 2 != 0 || r[i] % 7 == 0)
+		if (!(r[i] % 2 != 0 || i % 7 == 0))
 			r[i] = 0;
 }
 
