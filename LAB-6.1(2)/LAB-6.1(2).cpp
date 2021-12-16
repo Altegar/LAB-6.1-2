@@ -13,19 +13,20 @@
 
 using namespace std;
 
-void Random(int* r, int n, int a, int b)
+void Random(int* r, const int n, const int a, const int b, int i)
 {
-	for (int i = 0; i < n; i++) // i - додаткова змінна
-		r[i] = rand() % (b - a + 1) + a;
+	r[i] = rand() % (b - a + 1) + a;
+	if (i < n - 1)
+		Random(r, n, a, b, i + 1);
 }
 
-int Count(int* r, int n, int i) // функція обчислення к-ті елементів
+int Count(int* r, const int n, int i) // функція обчислення к-ті елементів
 {
 	if (i == n)
 		return 0;
 	else
 	{
-		if (!((r[i] % 2) != 0 || (i % 7 == 0)))
+		if (!(r[i] % 2 != 0 || i % 7 == 0))
 			return Count(r, n, i + 1) + 1;
 		else
 			return Count(r, n, i + 1);
@@ -36,7 +37,7 @@ int Sum(int* r, int n, int i) // функція обчислення суми е
 {
 	if (i < n)
 	{
-		if (!((r[i] % 2) != 0 || (i % 7 == 0)))
+		if (!(r[i] % 2 != 0 || i % 7 == 0))
 			return r[i] + Sum(r, n, i + 1);
 		else
 			return Sum(r, n, i + 1);
@@ -52,11 +53,13 @@ void Replace(int* r, int n) // функція заміни нюлями цих �
 			r[i] = 0;
 }
 
-void Print(int* r, int n) // форматне виведення
+void Print(int* r, const int n, int i) // форматне виведення
 {
-	for (int i = 0; i < n; i++)
-		cout << setw(3) << r[i] << " ";
-	cout << "\n";
+	cout << setw(3) << r[i];
+	if (i < n - 1)
+		Print(r, n, i + 1);
+	else
+		cout << endl;
 }
 
 int main()
@@ -67,14 +70,14 @@ int main()
 	int r[n]; // заданий масив
 	int a = 3, b = 92; // діапазон
 
-	Random(r, n, a, b);
-	cout << "Before = ";  Print(r, n);
+	Random(r, n, a, b, 0);
+	cout << "Before = ";  Print(r, n, 0);
 
 	cout << "count = " << Count(r, n, 0) << "\n";
 	cout << "S = " << Sum(r, n, 0) << "\n";
 
 	Replace(r, n);
-	cout << "After = "; Print(r, n);
+	cout << "After = "; Print(r, n, 0);
 
 	return 0;
 }
